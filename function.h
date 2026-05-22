@@ -246,7 +246,6 @@ int stringContains(char* haystack, char* needle) {
   }
   return 0;
 }
-// test
 int stringEquals(char* haystack, char* needle) {
   int j = 0;
   int i = 0;
