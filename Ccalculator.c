@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <wchar.h>
 
 #include "function.h"
 
@@ -60,7 +62,20 @@ int main() {
                     FArray_append(&allNumbers, val);
                     clearScreen();
                     val = 0;
-                    printf("%.2f\n", doingMath(allNumbers));
+                    float newNum = doingMath(allNumbers);
+                    printf(
+                        "The answer to your inquiry is..............\n\n\n\n "
+                        "              %.2f "
+                        "\n\n\n\n",
+                        newNum);
+
+                    // Freeing array
+                    Array_free(NULL, NULL, &allNumbers, FLOAT);
+                    allNumbers.size = 0;
+                    allNumbers.heap_size = 0;
+                    allNumbers.data = NULL;
+                    Array_new(NULL, NULL, &allNumbers, FLOAT);
+
                     printf("Calculator app\n");
                     break;
                   } else {
@@ -96,6 +111,7 @@ int main() {
       break;
     }
   }
+
   Array_free(NULL, NULL, &allNumbers, FLOAT);
   return 0;
 }
