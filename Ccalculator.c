@@ -76,7 +76,7 @@ int main() {
                 free(chosenNum);
               }
             } else {
-              printf("\n Exiting program (ctrl+d) was detected\n");
+              printf("\nExiting program (ctrl+d) was detected\n");
               break;
             }
           }
@@ -92,7 +92,7 @@ int main() {
         free(buf);
       }
     } else {
-      printf("\n Exiting program (ctrl+d) was detected\n");
+      printf("\nExiting program (ctrl+d) was detected\n");
       break;
     }
   }
