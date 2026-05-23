@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <wchar.h>
 
 #include "function.h"
 
@@ -38,10 +37,9 @@ int main() {
   for (;;) {
     char* buf = (char*)malloc(sizeof(char*));
     printf("Enter Number or press q to quit: ");
-    if (scanf(" %s", buf)) {
+    if (scanf(" %s", buf) != EOF) {
       if (stringEquals(buf, "q") == 0) {
         float val = atof(buf);
-
         if ((int)val != 0) {
           FArray_append(&allNumbers, val);
           int val;
@@ -52,7 +50,7 @@ int main() {
                 "\nChoose a "
                 "number or press q to quit:");
             char* chosenNum = (char*)malloc(sizeof(char*));
-            if (scanf("%s", chosenNum)) {
+            if (scanf("%s", chosenNum) != EOF) {
               if (!stringEquals(chosenNum, "q")) {
                 if (sscanf(chosenNum, "%d", &val) == 1) {
                   if (val <= 4 && val > 0) {
@@ -77,6 +75,9 @@ int main() {
                 break;
                 free(chosenNum);
               }
+            } else {
+              printf("\n Exiting program (ctrl+d) was detected\n");
+              break;
             }
           }
           if (val == 5) {
@@ -90,6 +91,9 @@ int main() {
         break;
         free(buf);
       }
+    } else {
+      printf("\n Exiting program (ctrl+d) was detected\n");
+      break;
     }
   }
   Array_free(NULL, NULL, &allNumbers, FLOAT);
