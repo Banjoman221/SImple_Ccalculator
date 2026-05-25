@@ -53,11 +53,11 @@ int main() {
           FArray_append(&allNumbers, val);
           int val;
           while (true) {
-            printf("\nChoose what operation you like to do: \n");
+            printf("\nChoose what operation you like to do: \n\n");
             printf(
                 "1)Add 2)Subtract 3)Multiplication 4)Divide 5)Equals "
                 "\nChoose a "
-                "number or press q to quit:");
+                "number:");
             char* chosenNum = (char*)malloc(sizeof(char*));
             if (scanf("%s", chosenNum) != EOF) {
               if (!stringEquals(chosenNum, "q")) {
