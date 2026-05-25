@@ -1,20 +1,21 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "function.h"
 
-float doingMath(FloatArray fArrray) {
-  float finalNum = fArrray.data[0];
-  for (int i = 1; i < fArrray.size; i++) {
-    if ((int)fArrray.data[i] == 1) {
-      finalNum = finalNum + fArrray.data[i + 1];
-    } else if ((int)fArrray.data[i] == 2) {
-      finalNum = finalNum - fArrray.data[i + 1];
-    } else if ((int)fArrray.data[i] == 3) {
-      finalNum = finalNum * fArrray.data[i + 1];
-    } else if ((int)fArrray.data[i] == 4) {
-      finalNum = finalNum / fArrray.data[i + 1];
-    } else if ((int)fArrray.data[i] == 5) {
+double doingMath(DoubleArray dArrray) {
+  double finalNum = dArrray.data[0];
+  for (int i = 1; i < dArrray.size; i++) {
+    if ((int)dArrray.data[i] == 1) {
+      finalNum = finalNum + dArrray.data[i + 1];
+    } else if ((int)dArrray.data[i] == 2) {
+      finalNum = finalNum - dArrray.data[i + 1];
+    } else if ((int)dArrray.data[i] == 3) {
+      finalNum = finalNum * dArrray.data[i + 1];
+    } else if ((int)dArrray.data[i] == 4) {
+      finalNum = finalNum / dArrray.data[i + 1];
+    } else if ((int)dArrray.data[i] == 5) {
       break;
     }
     i++;
@@ -30,8 +31,8 @@ void clearScreen() {
 int main() {
   clearScreen();
 
-  FloatArray allNumbers;
-  Array_new(NULL, NULL, &allNumbers, FLOAT);
+  DoubleArray allNumbers;
+  Array_new(NULL, NULL, &allNumbers, DOUBLE);
 
   printf("Calculator app\n");
   printf("You Can Always press q to quit\n\n");
@@ -48,9 +49,9 @@ int main() {
     if (scanf(" %s", buf) != EOF) {
       times++;
       if (stringEquals(buf, "q") == 0) {
-        float val = atof(buf);
+        double val = atof(buf);
         if ((int)val != 0) {
-          FArray_append(&allNumbers, val);
+          DArray_append(&allNumbers, val);
           int val;
           while (true) {
             printf("\nChoose what operation you like to do: \n\n");
@@ -63,13 +64,13 @@ int main() {
               if (!stringEquals(chosenNum, "q")) {
                 if (sscanf(chosenNum, "%d", &val) == 1) {
                   if (val <= 4 && val > 0) {
-                    FArray_append(&allNumbers, val);
+                    DArray_append(&allNumbers, val);
                     break;
                   } else if (val == 5) {
-                    FArray_append(&allNumbers, val);
+                    DArray_append(&allNumbers, val);
                     clearScreen();
                     val = 0;
-                    float newNum = doingMath(allNumbers);
+                    double newNum = doingMath(allNumbers);
                     printf(
                         "The answer to your inquiry is..............\n\n\n\n "
                         "              %.2f "
@@ -77,11 +78,11 @@ int main() {
                         newNum);
 
                     // Freeing array
-                    Array_free(NULL, NULL, &allNumbers, FLOAT);
+                    Array_free(NULL, NULL, &allNumbers, DOUBLE);
                     allNumbers.size = 0;
                     allNumbers.heap_size = 0;
                     allNumbers.data = NULL;
-                    Array_new(NULL, NULL, &allNumbers, FLOAT);
+                    Array_new(NULL, NULL, &allNumbers, DOUBLE);
 
                     times = 0;
                     printf("Calculator app\n");
@@ -121,6 +122,6 @@ int main() {
     }
   }
 
-  Array_free(NULL, NULL, &allNumbers, FLOAT);
+  Array_free(NULL, NULL, &allNumbers, DOUBLE);
   return 0;
 }

@@ -7,7 +7,7 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-typedef enum { STRING = 1, INT = 2, FLOAT = 3 } ArraysTypes;
+typedef enum { STRING = 1, INT = 2, DOUBLE = 3 } ArraysTypes;
 
 struct Document {
   int size;
@@ -29,25 +29,26 @@ struct _IntArray {
 };
 typedef struct _IntArray IntArray;
 
-struct _FloatArray {
+struct _DoubleArray {
   int heap_size;
   int size;
-  float* data;
+  double* data;
 };
-typedef struct _FloatArray FloatArray;
+typedef struct _DoubleArray DoubleArray;
 
 int strlength(char string[]);
 StringArray split(char string[], const char delimiter[]);
 void splitTest(char string[], const char delimiter[]);
 int stringContains(char* haystack, char* needle);
 int stringEquals(char* haystack, char* needle);
-void Array_new(StringArray* array, IntArray* intarray, FloatArray* floatarray,
+void Array_new(StringArray* array, IntArray* intarray, DoubleArray* doublearray,
                int num);
 void SArray_append(StringArray* array, char* data);
 void SArray_remove(StringArray* array, int index);
 void IArray_append(IntArray* array, int data);
-void Array_free(StringArray* array, IntArray* intarray, FloatArray* floatarray,
-                int num);
+void DArray_append(DoubleArray* array, double data);
+void Array_free(StringArray* array, IntArray* intarray,
+                DoubleArray* doublearray, int num);
 void remove_spaces_newline(char* s);
 void remove_spaces(char* s);
 void removeT(char* s);
@@ -55,7 +56,7 @@ void removeDashesAndTs(char* s);
 
 struct Document getFile(char* path);
 
-void Array_new(StringArray* array, IntArray* intarray, FloatArray* floatarray,
+void Array_new(StringArray* array, IntArray* intarray, DoubleArray* doublearray,
                int num) {
   switch (num) {
     case 1:
@@ -69,9 +70,9 @@ void Array_new(StringArray* array, IntArray* intarray, FloatArray* floatarray,
       intarray->data = malloc(sizeof(int*) * intarray->heap_size);
       break;
     case 3:
-      floatarray->heap_size = 1;
-      floatarray->size = 0;
-      floatarray->data = malloc(sizeof(float*) * floatarray->heap_size);
+      doublearray->heap_size = 1;
+      doublearray->size = 0;
+      doublearray->data = malloc(sizeof(double*) * doublearray->heap_size);
       break;
   }
 }
@@ -96,11 +97,11 @@ void IArray_append(IntArray* array, int data) {
   array->size++;
 }
 
-void FArray_append(FloatArray* array, float data) {
+void DArray_append(DoubleArray* array, double data) {
   while (array->size >= array->heap_size) {
     array->heap_size *= 2;
 
-    array->data = realloc(array->data, sizeof(float) * array->heap_size);
+    array->data = realloc(array->data, sizeof(double) * array->heap_size);
   }
   array->data[array->size] = data;
   array->size++;
@@ -119,8 +120,8 @@ void SArray_remove(StringArray* array, int index) {
   array->data = realloc(array->data, sizeof(int) * array->heap_size);
 }
 
-void Array_free(StringArray* array, IntArray* intarray, FloatArray* floatarray,
-                int num) {
+void Array_free(StringArray* array, IntArray* intarray,
+                DoubleArray* doublearray, int num) {
   switch (num) {
     case 1:
       if (array != NULL) {
@@ -138,10 +139,10 @@ void Array_free(StringArray* array, IntArray* intarray, FloatArray* floatarray,
       free(intarray);
       break;
     case 3:
-      if (floatarray != NULL) {
+      if (doublearray != NULL) {
         return;
       }
-      free(floatarray);
+      free(doublearray);
       break;
   }
 }
