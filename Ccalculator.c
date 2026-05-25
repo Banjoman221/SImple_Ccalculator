@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <wchar.h>
 
 #include "function.h"
 
@@ -36,19 +34,28 @@ int main() {
   Array_new(NULL, NULL, &allNumbers, FLOAT);
 
   printf("Calculator app\n");
+  printf("You Can Always press q to quit\n\n");
+  int times = 0;
   for (;;) {
     char* buf = (char*)malloc(sizeof(char*));
-    printf("Enter Number or press q to quit: ");
+
+    if (times == 0) {
+      printf("Enter A Number: ");
+    } else {
+      printf("\nEnter Another Number: ");
+    }
+
     if (scanf(" %s", buf) != EOF) {
+      times++;
       if (stringEquals(buf, "q") == 0) {
         float val = atof(buf);
         if ((int)val != 0) {
           FArray_append(&allNumbers, val);
           int val;
           while (true) {
-            printf("Choose what operation you like to do: \n");
+            printf("\nChoose what operation you like to do: \n");
             printf(
-                "1)Add \n2)Subtract \n3)Multiplication \n4)Divide \n5)Equals "
+                "1)Add 2)Subtract 3)Multiplication 4)Divide 5)Equals "
                 "\nChoose a "
                 "number or press q to quit:");
             char* chosenNum = (char*)malloc(sizeof(char*));
@@ -76,7 +83,9 @@ int main() {
                     allNumbers.data = NULL;
                     Array_new(NULL, NULL, &allNumbers, FLOAT);
 
+                    times = 0;
                     printf("Calculator app\n");
+                    printf("You Can Always press q to quit\n\n");
                     break;
                   } else {
                     printf("Must pick an operation\n");
